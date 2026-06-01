@@ -56,7 +56,7 @@ public class EventDetailsServlet
     protected void doPost(
             HttpServletRequest req,
             HttpServletResponse resp)
-            throws IOException {
+            throws ServletException, IOException {
 
         int eventId =
                 Integer.parseInt(
@@ -68,27 +68,35 @@ public class EventDetailsServlet
         String email =
                 req.getParameter("email");
 
-        Participant participant =
-                new Participant();
+        try {
 
-        participant.setEventId(eventId);
-        participant.setStudentName(name);
-        participant.setStudentEmail(email);
+            Participant participant =
+                    new Participant();
 
-        boolean success =
-                eventService.registerParticipant(
-                        participant);
+            participant.setEventId(eventId);
+            participant.setStudentName(name);
+            participant.setStudentEmail(email);
 
-        if (!success) {
+            boolean success =
+                    eventService.registerParticipant(
+                            participant);
 
-            resp.sendError(
-                    HttpServletResponse.SC_BAD_REQUEST,
-                    "No free seats");
+            if (!success) {
+                throw new RuntimeException(
+                        "No free seats available");
+            }
 
-            return;
+            resp.sendRedirect(
+                    "event?id=" + eventId);
+
+        } catch (RuntimeException e) {
+
+            req.setAttribute(
+                    "error",
+                    e.getMessage()
+            );
+
+            doGet(req, resp);
         }
-
-        resp.sendRedirect(
-                "event?id=" + eventId);
     }
 }

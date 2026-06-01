@@ -126,4 +126,17 @@ public class EventRepository {
             e.printStackTrace();
         }
     }
+    public void deleteById(int id) {
+        String sql = "DELETE FROM events WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

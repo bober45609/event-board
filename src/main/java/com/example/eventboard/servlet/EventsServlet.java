@@ -10,6 +10,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
+
 @WebServlet("/events")
 public class EventsServlet extends HttpServlet {
 
@@ -68,8 +69,14 @@ public class EventsServlet extends HttpServlet {
                 eventService.getAllEvents()
         );
 
+        req.setAttribute(
+                "eventService",
+                eventService
+        );
+
         req.getRequestDispatcher(
                 "/events.jsp"
         ).forward(req, resp);
     }
+
 }
