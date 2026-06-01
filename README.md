@@ -1,4 +1,3 @@
-# event-board
 # Event Board
 
 Java EE web application for managing events and participant registrations.
