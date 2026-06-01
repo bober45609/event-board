@@ -64,7 +64,7 @@ private static final String PASSWORD = "password";
 4. Open:
 
 ```
-http://localhost:8080/events
+ttp://localhost:8080/event-board/events
 ```
 
 ## Features
